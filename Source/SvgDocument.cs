@@ -435,6 +435,31 @@ namespace Svg
         /// Renders the <see cref="SvgDocument"/> and returns the image as a <see cref="Bitmap"/>.
         /// </summary>
         /// <returns>A <see cref="Bitmap"/> containing the rendered document.</returns>
+        public virtual Bitmap Draw(float imageResolution)
+        {
+            //Trace.TraceInformation("Begin Render");
+
+            var size = GetDimensions();
+            var bitmap = new Bitmap((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height));
+            bitmap.SetResolution(imageResolution, imageResolution);
+            try
+            {
+                Draw(bitmap);
+            }
+            catch
+            {
+                bitmap.Dispose();
+                throw;
+            }
+
+            //Trace.TraceInformation("End Render");
+            return bitmap;
+        }
+
+        /// <summary>
+        /// Renders the <see cref="SvgDocument"/> and returns the image as a <see cref="Bitmap"/>.
+        /// </summary>
+        /// <returns>A <see cref="Bitmap"/> containing the rendered document.</returns>
         public virtual Bitmap Draw()
         {
             //Trace.TraceInformation("Begin Render");
